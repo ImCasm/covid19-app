@@ -1,0 +1,34 @@
+<!-- Jumbotron -->
+<div class="blue-gradient jumbotron text-center">
+
+    <!-- Title -->
+    <h1 class="card-title h1 text-white">Información Covid-19 <i class="text-white fas fa-virus"></i> </h1>
+    <!-- Subtitle -->
+    <p class="text-white-50 my-4 font-weight-bold">
+        Datos consumidos de <a style="color:black;" href="https://covid19api.com/">https://covid19api.com/ </a>
+    </p>
+
+    <!-- Grid row -->
+    <div class="row d-flex justify-content-center">
+
+        <!-- Grid column -->
+        <div class="col-xl-7 pb-2">
+
+            <p class="card-text text-white">
+                Los datos mostrados son verídicos y confiables. la información que se muestra en el aplicativo corresponde a la World Health Organization (WHO) quien es la que subministra los datos oficiales correspondiente a la pandemia global de Covid19.
+            </p>
+
+        </div>
+        <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+    <hr class="my-4">
+ 
+    <div class="pt-2">
+        <app-search (countryInfoEmitter)="infoEmitter($event)"></app-search>
+    </div>
+
+</div>
+<!-- Jumbotron -->

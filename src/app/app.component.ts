@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'covid19-app';
+  public countryInfo: any;
+
+  countryInfoEmitter($countryInfo) {
+    this.countryInfo = $countryInfo;
+  }
 }

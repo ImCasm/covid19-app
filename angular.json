@@ -24,6 +24,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/mdbootstrap/css/bootstrap.min.css",
+              "node_modules/mdbootstrap/css/mdb.min.css",
+              "src/assets/fontawesome-free-5.13.0-web/css/all.min.css",
               "src/styles.css"
             ],
             "scripts": []

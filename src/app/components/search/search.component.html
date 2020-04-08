@@ -1,0 +1,10 @@
+<div class="bg-white w-75 ml-auto mr-auto md-form active-cyan active-cyan-2 mb-3">
+    <select class="browser-default custom-select" (change)="getSelectedCountry($event.target.value)">
+        <option selected>Seleccione el País a buscar</option>
+        <option *ngFor="let country of countries"
+            value="{{country.Slug}}">
+            {{country.Country}}
+        </option>
+    </select>
+</div>
+

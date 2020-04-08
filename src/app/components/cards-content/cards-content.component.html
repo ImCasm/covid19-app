@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row m-3 text-center">
+        <div class="col">
+            <button 
+                (click)="getSummaryInfo()" 
+                type="button" 
+                class="btn btn-outline-primary waves-effect">
+                Mostrar Resumen
+            </button>
+        </div>
+        <div class="col">
+            <button 
+                (click)="showColombia()" 
+                type="button" 
+                class="btn btn-outline-primary waves-effect">
+                Mostrar Colombia
+            </button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="text-center pt-2">
+        <app-data-summary></app-data-summary>
+    </div>
+
+    <hr class="my-4">
+
+    <app-country-info [countryInfo]="countryInfo"></app-country-info>
+
+    <hr class="my-4">
+
+    <div *ngIf="showSummaryCountries">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="row">
+        <app-country-info *ngFor="let country of countriesInfo" [countryInfo]="country"></app-country-info>
+    </div>
+</div>
