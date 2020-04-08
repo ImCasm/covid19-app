@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { RestServiceService } from 'src/app/services/rest-service.service';
+import { SummaryCountry } from 'src/app/models/SummaryCountry';
 
 @Component({
   selector: 'app-cards-content',
@@ -8,43 +9,37 @@ import { RestServiceService } from 'src/app/services/rest-service.service';
 })
 export class CardsContentComponent implements OnInit, OnChanges, AfterViewChecked {
 
+  @Input() public slugString: string;
   @Input() public countryInfo: any;
   @ViewChild('infoContent') infoContent: ElementRef;
   public countriesInfo = new Array<any>();
-  public showSummaryCountries: boolean;
-  public summaryCountries = [
-    'colombia',
-    'venezuela',
-    'ecuador',
-    'peru',
-    'uruguay',
-    'argentina',
-    'mexico',
-    'bolivia',
-    'brazil',
-    'chile',
-    'paraguay',
-    'italy',
-    'spain',
-    'russia'
-  ];
+  public summaryInfo: SummaryCountry[];
 
-  constructor(
-    private _restService: RestServiceService
-  ) {
-    this.showSummaryCountries = false;
+  constructor(private _restService: RestServiceService) {
+    this.summaryInfo = new Array<SummaryCountry>();
   }
+
   ngAfterViewChecked(): void {
-    this.scrollToContentInfo();
+    if (this.slugString || this.countriesInfo.length > 0) {
+      this.scrollToContentInfo();
+    }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this._restService.getSummary().subscribe(response => {
+      response.Countries.forEach((el: SummaryCountry) => {
+        this.summaryInfo.push(el);
+      });
+    }, error => {
+      console.log(error);
+    });
+  }
 
   ngOnChanges(): void {
-
     if (this.countryInfo) {
       this.countriesInfo = new Array<any>();
     }
+    this.countryInfo = this.findBySlug(this.slugString);
   }
 
   scrollToContentInfo() {
@@ -52,40 +47,28 @@ export class CardsContentComponent implements OnInit, OnChanges, AfterViewChecke
   }
 
   showColombia() {
-    this.scrollToContentInfo();
     this.countriesInfo = new Array<any>();
+    this.slugString = 'colombia';
+    this.countryInfo = this.findBySlug(this.slugString);
+  }
 
-    this._restService.getCountryData('colombia').subscribe(response => {
-      this.countryInfo = response[response.length - 1];
-    },
-    error => {
-      console.log(error);
+  findBySlug(slug: string): SummaryCountry {
+    let country: SummaryCountry;
+    this.summaryInfo.forEach((el: SummaryCountry) => {
+      if (el.Slug === slug) {
+        country = el;
+      }
     });
+
+    return country;
   }
 
   getSummaryInfo() {
-
-    this.summaryCountries.forEach((e) => {
-
-      this._restService.getCountryData(e).subscribe(response => {
-        const infoC = response[response.length - 1];
-
-        if (infoC) {
-          this.countriesInfo.push({
-            Country: infoC.Country,
-            Confirmed: infoC.Confirmed,
-            Deaths: infoC.Deaths,
-            Recovered: infoC.Recovered,
-            Active: infoC.Active,
-            Date: infoC.Date,
-          });
-        }
-      },
-      error => {
-        console.log(error);
-      });
-    });
     this.countryInfo = undefined;
-    this.scrollToContentInfo();
+    this.summaryInfo.forEach((el: SummaryCountry) => {
+      if (el) {
+        this.countriesInfo.push(el);
+      }
+    });
   }
 }

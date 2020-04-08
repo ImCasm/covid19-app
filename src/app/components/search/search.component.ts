@@ -10,11 +10,11 @@ import { Country } from '../../models/Country';
 export class SearchComponent implements OnInit {
 
   public selectedCountry: any;
-  public countryInfo: any;
+  public slugString: string;
   public countries: Country[];
 
 
-  @Output() public countryInfoEmitter = new EventEmitter();
+  @Output() public slugStringEmitter = new EventEmitter();
 
   constructor(
     private _restServiceService: RestServiceService
@@ -45,23 +45,13 @@ export class SearchComponent implements OnInit {
       });
   }
 
-  getSelectedCountry(country: string) {
-    this.selectedCountry = country;
-    this.getCountryData(this.selectedCountry);
-  }
-
-  getCountryData(country: string) {
-    this._restServiceService.getCountryData(country).subscribe(response => {
-      this.countryInfo = response[response.length - 1];
-      console.log(this.countryInfo);
-      this.emmitCountryInfo();
-    }, error => {
-      console.log(error);
-    });
+  getSelectedCountry(slugString: string) {
+    this.slugString = slugString;
+    this.emmitCountryInfo();
   }
 
   emmitCountryInfo() {
-    this.countryInfoEmitter.emit(this.countryInfo);
+    this.slugStringEmitter.emit(this.slugString);
   }
 
 }

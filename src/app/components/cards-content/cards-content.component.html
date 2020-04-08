@@ -5,7 +5,7 @@
                 (click)="getSummaryInfo()"
                 type="button"
                 class="btn btn-outline-primary waves-effect">
-                Mostrar Resumen
+                Mostrar Todos
             </button>
         </div>
         <div class="col">
@@ -27,7 +27,7 @@
     <hr class="my-4">
 
     <div #infoContent>
-        <app-country-info [countryInfo]="countryInfo" *ngIf="countryInfo">
+        <app-country-info [countryInfo]="findBySlug(slugString)" *ngIf="countryInfo">
         </app-country-info>
     
         <hr class="my-4">

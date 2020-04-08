@@ -7,15 +7,15 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  @Output() public countryInfoEmitter = new EventEmitter();
+  @Output() public slugStringEmitter = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  infoEmitter(infoCountry: any) {
-    this.countryInfoEmitter.emit(infoCountry);
+  slugEmitter(slugString: string) {
+    this.slugStringEmitter.emit(slugString);
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { SummaryCountry } from 'src/app/models/SummaryCountry';
 
 @Component({
   selector: 'app-country-info',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 })
 export class CountryInfoComponent implements OnInit {
 
-  @Input() public countryInfo: any;
+  @Input() public countryInfo: SummaryCountry;
 
   constructor() { }
 
