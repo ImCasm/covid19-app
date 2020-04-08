@@ -36,10 +36,12 @@ export class CardsContentComponent implements OnInit, OnChanges, AfterViewChecke
   }
 
   ngOnChanges(): void {
+
+    this.countryInfo = this.findBySlug(this.slugString);
+
     if (this.countryInfo) {
       this.countriesInfo = new Array<any>();
     }
-    this.countryInfo = this.findBySlug(this.slugString);
   }
 
   scrollToContentInfo() {
