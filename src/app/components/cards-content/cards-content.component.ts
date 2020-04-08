@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Country } from 'src/app/models/Country';
+import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { RestServiceService } from 'src/app/services/rest-service.service';
 
 @Component({
@@ -7,9 +6,10 @@ import { RestServiceService } from 'src/app/services/rest-service.service';
   templateUrl: './cards-content.component.html',
   styleUrls: ['./cards-content.component.css']
 })
-export class CardsContentComponent implements OnInit {
+export class CardsContentComponent implements OnInit, OnChanges, AfterViewChecked {
 
   @Input() public countryInfo: any;
+  @ViewChild('infoContent') infoContent: ElementRef;
   public countriesInfo = new Array<any>();
   public showSummaryCountries: boolean;
   public summaryCountries = [
@@ -34,12 +34,27 @@ export class CardsContentComponent implements OnInit {
   ) {
     this.showSummaryCountries = false;
   }
+  ngAfterViewChecked(): void {
+    this.scrollToContentInfo();
+  }
 
   ngOnInit(): void { }
 
+  ngOnChanges(): void {
 
+    if (this.countryInfo) {
+      this.countriesInfo = new Array<any>();
+    }
+  }
+
+  scrollToContentInfo() {
+    this.infoContent.nativeElement.scrollIntoView();
+  }
 
   showColombia() {
+    this.scrollToContentInfo();
+    this.countriesInfo = new Array<any>();
+
     this._restService.getCountryData('colombia').subscribe(response => {
       this.countryInfo = response[response.length - 1];
     },
@@ -49,9 +64,6 @@ export class CardsContentComponent implements OnInit {
   }
 
   getSummaryInfo() {
-
-
-    this.showSummaryCountries = true;
 
     this.summaryCountries.forEach((e) => {
 
@@ -73,6 +85,7 @@ export class CardsContentComponent implements OnInit {
         console.log(error);
       });
     });
-    this.showSummaryCountries = false;
+    this.countryInfo = undefined;
+    this.scrollToContentInfo();
   }
 }

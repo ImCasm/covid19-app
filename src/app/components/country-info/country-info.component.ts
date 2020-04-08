@@ -8,17 +8,10 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 export class CountryInfoComponent implements OnInit {
 
   @Input() public countryInfo: any;
-  @ViewChild('country1') country1: ElementRef;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
-  scrollCountry() {
-    if (this.country1) {
-      this.country1.nativeElement.scrollIntoView();
-    }
-  } 
 
 }
