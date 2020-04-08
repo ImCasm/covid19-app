@@ -10,8 +10,8 @@
         <i class="fas fa-globe-americas"></i>
     </h2>
     <div class="row">
-        <p class="col font-weight-bold">Total Contagiados: <span class="text-warning">{{summary.TotalConfirmed}}</span></p>
-        <p class="col border-gray font-weight-bold">Total Recuperados: <span class="text-success">{{summary.TotalRecovered}}</span></p>
-        <p class="col font-weight-bold">Total Muertos: <span class="text-danger">{{summary.TotalDeaths}}</span></p>
+        <p class="col font-weight-bold">Total Contagiados: <span class="text-warning">{{summary.TotalConfirmed | number }}</span></p>
+        <p class="col border-gray font-weight-bold">Total Recuperados: <span class="text-success">{{summary.TotalRecovered | number }}</span></p>
+        <p class="col font-weight-bold">Total Muertos: <span class="text-danger">{{summary.TotalDeaths | number}}</span></p>
     </div>
 </div>
