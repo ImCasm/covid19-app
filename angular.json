@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "covid19-app": {
@@ -24,12 +24,16 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/mdbootstrap/css/bootstrap.min.css",
-              "node_modules/mdbootstrap/css/mdb.min.css",
+              "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
+              "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
+              "node_modules/animate.css/animate.css",
               "src/assets/fontawesome-free-5.13.0-web/css/all.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/hammerjs/hammer.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -122,6 +126,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "covid19-app"
 }

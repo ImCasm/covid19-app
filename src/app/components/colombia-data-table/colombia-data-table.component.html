@@ -1,0 +1,77 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <iframe 
+        src="https://www.datos.gov.co/dataset/Datos-Abiertos-del-Coronavirus-COVID-19-por-ciudad/hvyw-6ti5/embed?width=600&height=400" width="600" height="400" style="border:0; padding: 0; margin: 0;">
+      </iframe>
+    </div>
+
+    <div class="col">
+      <iframe 
+        src="https://www.datos.gov.co/dataset/Estado-de-Casos-de-Coronavirus-COVID-19-en-Colombi/6c4c-msrp/embed?width=600&height=400" width="600" height="400" style="border:0; padding: 0; margin: 0;">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<h2 class="text-center">Datos específicos</h2>
+
+<div class="container">
+  <div *ngIf="isLoading()" class="spinner-border text-primary" role="status">
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class=" text-center">
+        <input type="text" class="form-control" [(ngModel)]="searchText" id="search-input" mdbInput placeholder="Busqueda">
+          <button (click)="searchItems()" size="sm" class="text-center" mdbBtn type="button" color="primary" rounded="true" outline="true" mdbWavesEffect>Buscar</button>
+      </div>
+    </div>
+    <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+      <thead class="sticky-top">
+        <tr>
+          <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]"
+            scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
+          </th>
+        </tr>
+      </thead>
+      <tbody #row>
+        <tr mdbTableCol (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)"
+          *ngFor="let el of elements; let i = index">
+          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
+            {{el.id_caso}}</th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.fecha | date}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.ciudad}}
+          </td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.departamento}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.atencion}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.edad}}</td>
+
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.sexo}}</td>
+
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.tipo}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.estado}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.pais}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.diagnostico | date}}</td>
+        </tr>
+      </tbody>
+      <tfoot class="grey lighten-5 w-100">
+        <tr>
+          <td colspan="4">
+            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="elements">
+            </mdb-table-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
