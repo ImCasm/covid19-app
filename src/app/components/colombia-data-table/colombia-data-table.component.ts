@@ -34,7 +34,7 @@ export class ColombiaDataTableComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private deviceService: DeviceDetectorService
     ) {
-      //this.isMobile = this.deviceService.isMobile();
+      this.isMobile = this.deviceService.isMobile() || this.deviceService.isTablet();
     }
 
   @HostListener('input') oninput() {
