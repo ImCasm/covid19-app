@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { RestServiceService } from 'src/app/services/rest-service.service';
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class ColombiaDataTableComponent implements OnInit, AfterViewInit {
 
   searchText: string = '';
   previous: string;
+  isMobile: boolean;
 
   maxVisibleItems: number = 10;
 
@@ -27,7 +29,13 @@ export class ColombiaDataTableComponent implements OnInit, AfterViewInit {
   @ViewChild('colombiaDataTable') table: ElementRef;
 
 
-  constructor(private restService: RestServiceService, private cdRef: ChangeDetectorRef) { }
+  constructor(
+    private restService: RestServiceService,
+    private cdRef: ChangeDetectorRef,
+    private deviceService: DeviceDetectorService
+    ) {
+      //this.isMobile = this.deviceService.isMobile();
+    }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;

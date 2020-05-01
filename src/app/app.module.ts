@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {MomentModule} from 'angular2-moment';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
@@ -32,7 +33,8 @@ import { TestComponent } from './components/test/test.component';
     HttpClientModule,
     FormsModule,
     MomentModule,
-    MDBBootstrapModule
+    MDBBootstrapModule,
+    DeviceDetectorModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
