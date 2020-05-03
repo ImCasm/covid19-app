@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {MomentModule} from 'angular2-moment';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
@@ -34,7 +35,8 @@ import { TestComponent } from './components/test/test.component';
     FormsModule,
     MomentModule,
     MDBBootstrapModule,
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

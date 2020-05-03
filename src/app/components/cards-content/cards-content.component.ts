@@ -14,7 +14,7 @@ export class CardsContentComponent implements OnInit, OnChanges, AfterViewChecke
   @ViewChild('infoContent') infoContent: ElementRef;
   public countriesInfo = new Array<any>();
   public summaryInfo: SummaryCountry[];
-
+  
   constructor(private _restService: RestServiceService) {
     this.summaryInfo = new Array<SummaryCountry>();
   }

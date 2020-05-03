@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { RestServiceService } from 'src/app/services/rest-service.service';
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
-import { DeviceDetectorService } from 'ngx-device-detector';
-
 
 @Component({
   selector: 'app-colombia-data-table',
@@ -16,48 +14,67 @@ export class ColombiaDataTableComponent implements OnInit, AfterViewInit {
   @ViewChild('row', { static: true }) row: ElementRef;
 
   elements: any = [];
+  cities: any = [];
   headElements = ['ID', 'Fecha de notificación', 'Ciudad', 'Departamento',
     'Atención', 'Edad', 'Sexo', 'Tipo', 'Estado', 'Prosedencia', 'Fecha diagnostico'];
 
   searchText: string = '';
   previous: string;
-  isMobile: boolean;
+  maxVisibleItems: number = 7;
 
-  maxVisibleItems: number = 10;
-
-  private loading = true;
+  private loading = false;
   @ViewChild('colombiaDataTable') table: ElementRef;
 
 
   constructor(
     private restService: RestServiceService,
-    private cdRef: ChangeDetectorRef,
-    private deviceService: DeviceDetectorService
-    ) {
-      this.isMobile = this.deviceService.isMobile() || this.deviceService.isTablet();
-    }
+    private cdRef: ChangeDetectorRef
+    ) {}
 
-  @HostListener('input') oninput() {
-    this.mdbTablePagination.searchText = this.searchText;
-  }
+  // @HostListener('input') oninput() {
+  //   this.mdbTablePagination.searchText = this.searchText;
+  // }
 
   ngOnInit(): void {
 
     this.restService.getColombiaData();
     this.restService.colombiaData$.subscribe(res => {
-      res.forEach((e, i) => {
+      res.forEach(e => {
+        if (!this.cities.includes(e.ciudad_de_ubicaci_n)) {
+          this.cities.push(e.ciudad_de_ubicaci_n);
+        }
+      });
+      this.cities.sort();
+    });
+  }
+
+  ngAfterViewInit() {
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
+  }
+
+  getSelectedCity(city) {
+    this.loading = false;
+    this.mdbTable.setDataSource([]);
+    this.elements = this.mdbTable.getDataSource();
+    this.previous = this.mdbTable.getDataSource();
+    this.loading = false;
+    this.restService.getCityData(city).subscribe(res => {
+      res.forEach(row => {
         this.elements.push({
-          id_caso: e.id_de_caso.toString(),
-          fecha: e.fecha_de_notificaci_n,
-          ciudad: e.ciudad_de_ubicaci_n,
-          departamento: e.departamento,
-          atencion: e.atenci_n,
-          edad: e.edad,
-          sexo: e.sexo,
-          tipo: e.tipo,
-          estado: e.estado,
-          pais: e.pa_s_de_procedencia,
-          diagnostico: e.fecha_diagnostico
+          id_caso: row.id_de_caso,
+          fecha: row.fecha_de_notificaci_n,
+          ciudad: row.ciudad_de_ubicaci_n,
+          departamento: row.departamento,
+          atencion: row.atenci_n,
+          edad: row.edad,
+          sexo: row.sexo,
+          tipo: row.tipo,
+          estado: row.estado,
+          pais: row.pa_s_de_procedencia,
+          diagnostico: row.fecha_diagnostico
         });
       });
       this.loading = false;
@@ -65,14 +82,6 @@ export class ColombiaDataTableComponent implements OnInit, AfterViewInit {
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });
-  }
-
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
   }
 
   data() {
@@ -136,6 +145,8 @@ export class ColombiaDataTableComponent implements OnInit, AfterViewInit {
   }
 
   searchItems() {
+    this.mdbTablePagination.searchText = this.searchText;
+
     const prev = this.mdbTable.getDataSource();
 
     if (!this.searchText) {
