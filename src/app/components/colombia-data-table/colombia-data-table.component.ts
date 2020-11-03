@@ -40,8 +40,8 @@ export class ColombiaDataTableComponent implements OnInit, AfterViewInit {
     this.restService.getColombiaData();
     this.restService.colombiaData$.subscribe(res => {
       res.forEach(e => {
-        if (!this.cities.includes(e.ciudad_de_ubicaci_n)) {
-          this.cities.push(e.ciudad_de_ubicaci_n);
+        if (!this.cities.includes(e.ciudad_municipio_nom)) {
+          this.cities.push(e.ciudad_municipio_nom);
         }
       });
       this.cities.sort();
@@ -66,14 +66,14 @@ export class ColombiaDataTableComponent implements OnInit, AfterViewInit {
         this.elements.push({
           id_caso: row.id_de_caso,
           fecha: row.fecha_de_notificaci_n,
-          ciudad: row.ciudad_de_ubicaci_n,
-          departamento: row.departamento,
-          atencion: row.atenci_n,
+          ciudad: row.ciudad_municipio_nom,
+          departamento: row.departamento_nom,
+          atencion: row.ubicacion,
           edad: row.edad,
           sexo: row.sexo,
-          tipo: row.tipo,
+          tipo: row.fuente_tipo_contagio,
           estado: row.estado,
-          pais: row.pa_s_de_procedencia,
+          pais: row.pais_viajo_1_nom,
           diagnostico: row.fecha_diagnostico
         });
       });

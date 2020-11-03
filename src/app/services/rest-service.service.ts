@@ -40,8 +40,8 @@ export class RestServiceService {
 
   getCityData(city: string): Observable<any> {
     let httpParams: HttpParams = new HttpParams();
-    const url = 'https://www.datos.gov.co/resource/gt2j-8ykr.json?ciudad_de_ubicaci_n=' + city;
-    httpParams = httpParams.append('$limit', '10000');
+    const url = 'https://www.datos.gov.co/resource/gt2j-8ykr.json?ciudad_municipio_nom=' + city;
+    //httpParams = httpParams.append('$limit', '10000');
     httpParams = httpParams.append('$$app_token', 'ZB1KAD7Upgc0cvos3iV6X6ASo');
     return this._http.get(url, {params: httpParams});
   }
